@@ -20,7 +20,10 @@ INSERT INTO
 VALUES 
   ('Joe Joe', 'Williams'),
   ('John', 'Adams'),
-  ('Gwen', 'Stefani');
+  ('Gwen', 'Stefani'),
+  ("Ned", "Ruggeri"), 
+  ("Kush", "Patel"), 
+  ("Earl", "Cat");
 -- USERS
 
 
@@ -40,8 +43,8 @@ INSERT INTO
 VALUES 
   ('Favorite color?', 'What is your fave color?', (SELECT id FROM users WHERE fname = 'Joe Joe' AND lname = 'Williams')), 
   ('Favorite food?', 'What is your fave food?', (SELECT id FROM users WHERE fname = 'John' AND lname = 'Adams')),  
-  ('Favorite drink?', 'What is your fave drink?', (SELECT id FROM users WHERE fname = 'Gwen' AND lname = 'Stefani'));   
-
+  ('Favorite drink?', 'What is your fave drink?', (SELECT id FROM users WHERE fname = 'Gwen' AND lname = 'Stefani')),
+  ("Ned Question", "NED NED NED", (SELECT id FROM users WHERE fname = 'Ned' AND lname = 'Ruggeri'));
 -- QUESTIONS
 
 
@@ -53,6 +56,18 @@ CREATE TABLE question_follows (
   FOREIGN KEY (question_id) REFERENCES questions(id),
   FOREIGN KEY (users_id) REFERENCES users(id)
 );
+  
+  INSERT INTO
+  question_follows (users_id, question_id)
+  VALUES
+  ((SELECT id FROM users WHERE fname = "Ned" AND lname = "Ruggeri"),
+  (SELECT id FROM questions WHERE title = "Favorite food?")),
+
+  ((SELECT id FROM users WHERE fname = "Kush" AND lname = "Patel"),
+  (SELECT id FROM questions WHERE title = "Favorite color?")),
+  
+  ((SELECT id FROM users WHERE fname = "Kush" AND lname = "Patel"),
+  (SELECT id FROM questions WHERE title = "Favorite food?"));
 
 
 -- REPLIES
